@@ -1,70 +1,36 @@
-# Getting Started with Create React App
+# Front-end Engineering Challenge
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Requirements
+ - Display top 10 selling products in order from most sold to least and the revenue of each product.
 
-## Available Scripts
+ ## Getting Started
+ 1. Use Redux "thunk" middleware for async data: fetch orders 
 
-In the project directory, you can run:
+ 2. Transform the data from the server to a format more conducive ('src/utils/'.)
+ -  Calculate revenue each product/order 
 
-### `npm start`
+Ex: {value: 1000, scale: 2} is equivalent to 1000 / 10^2 => 1000 / 100 => $10.00.
+ ```
+{
+     order_count: 2
+     vendor_price: {
+         value: 111, 
+         scale: 2
+     }
+ }
+ product.revenue = product.order_count * (product.vendor_price.value / 10 ** product.vendor_price.scale)
+ ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  -  Create uniqueId for each product (to be convenient for find products and sum total revenue of each product from array of orders)
+  ```
+  products: [
+      {name: 'WATER CHESTNUT  SLICED CANNED', category: 'DAIRY', product_id: 7},
+      {name: 'CUP  FOIL 4 OZ 1', category: 'DRY GOODS', product_id: 7}
+  ]
+    product.uniqueId: product.category.concat(product.product_id),
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  ```
+3. The ```<TopListComponent>``` get orders from state.orders by using useSelector 
+4. The ```<TopListComponent>``` has : 
+- a State variable: topSaleList . 
+- a useEffect with a function to find array of 10 selling products --> set this array into  topList State variable --> render 
